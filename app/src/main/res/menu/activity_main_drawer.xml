@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Essentials">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/essentials_installation"
+                    android:title="Installation"/>
+                <item
+                    android:id="@+id/essentials_introduction"
+                    android:title="Introduction"/>
+                <item
+                    android:id="@+id/essentials_the_vue_instance"
+                    android:title="The Vue Instance"/>
+                <item
+                    android:id="@+id/essentials_template_syntax"
+                    android:title="Template Syntax"/>
+                <item
+                    android:id="@+id/essentials_computed_properties_and_watchers"
+                    android:title="Computed Properties and Watchers"/>
+                <item
+                    android:id="@+id/essentials_class_and_style_bindings"
+                    android:title="Class and Style Bindings"/>
+                <item
+                    android:id="@+id/essentials_conditional_rendering"
+                    android:title="Conditional Rendering"/>
+                <item
+                    android:id="@+id/essentials_list_rendering"
+                    android:title="List Rendering"/>
+                <item
+                    android:id="@+id/essentials_event_handling"
+                    android:title="Event Handling"/>
+                <item
+                    android:id="@+id/essentials_form_input_bindings"
+                    android:title="Form Input Bindings"/>
+                <item
+                    android:id="@+id/essentials_components"
+                    android:title="Components"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Advanced">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/advanced_reactivity_in_depth"
+                    android:title="Reactivity in Depth"/>
+                <item
+                    android:id="@+id/advanced_transition_effects"
+                    android:title="Transition Effects"/>
+                <item
+                    android:id="@+id/advanced_transitioning_state"
+                    android:title="Transitioning State"/>
+                <item
+                    android:id="@+id/advanced_render_functions"
+                    android:title="Render Functions"/>
+                <item
+                    android:id="@+id/advanced_custom_directives"
+                    android:title="Custom Directives"/>
+                <item
+                    android:id="@+id/advanced_mixins"
+                    android:title="Mixins"/>
+                <item
+                    android:id="@+id/advanced_plugins"
+                    android:title="Plugins"/>
+                <item
+                    android:id="@+id/advanced_single_file_components"
+                    android:title="Single File Components"/>
+                <item
+                    android:id="@+id/advanced_deploying_for_production"
+                    android:title="Deploying For Production"/>
+                <item
+                    android:id="@+id/advanced_routing"
+                    android:title="Routing"/>
+                <item
+                    android:id="@+id/advanced_state_management"
+                    android:title="State Management"/>
+                <item
+                    android:id="@+id/advanced_unit_testing"
+                    android:title="Unit Testing"/>
+                <item
+                    android:id="@+id/advanced_server_side_rendering"
+                    android:title="Server-Side Rendering"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Migrating">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/migrating_migration_from_vue_1_x"
+                    android:title="Migration from Vue 1.x"/>
+                <item
+                    android:id="@+id/migrating_migration_from_vue_router_0_7_x"
+                    android:title="Migration from Vue Router 0.7.x"/>
+                <item
+                    android:id="@+id/migrating_migration_from_vuex_0_6_x_to_1_0"
+                    android:title="Migration from Vuex 0.6.x to 1.0"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Meta">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/meta_comparison_with_other_frameworks"
+                    android:title="Comparison with Other Frameworks"/>
+                <item
+                    android:id="@+id/meta_join_the_vue_js_community"
+                    android:title="Join the Vue.js Community!"/>
+            </group>
+        </menu>
+    </item>
+
+</menu>

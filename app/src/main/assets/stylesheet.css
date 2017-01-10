@@ -1,0 +1,15 @@
+#mobile-bar {
+    display: none !important;
+}
+
+.content {
+    padding: 0 !important;
+}
+
+.guide-links {
+    margin-bottom: 2em !important;
+}
+
+.footer {
+    display: none !important;
+}

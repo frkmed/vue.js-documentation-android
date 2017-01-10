@@ -1,0 +1,6 @@
+{
+    "require": {
+        "illuminate/filesystem": "^5.3",
+        "illuminate/support": "^5.3"
+    }
+}

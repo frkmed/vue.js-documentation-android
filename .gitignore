@@ -1,0 +1,14 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+/vendor
+/vuejs.org
+/app/src/main/assets/*
+!/app/src/main/assets/stylesheet.css
+.idea
