@@ -96,7 +96,7 @@ class Handler
      */
     protected function generate()
     {
-        exec('cd ' . __DIR__ . '/vuejs.org && ' . __DIR__ . '/vuejs.org/node_modules/.bin/hexo.cmd generate', $output, $returnCode);
+        exec('cd ' . __DIR__ . '/vuejs.org && hexo generate', $output, $returnCode);
 
         return $this;
     }

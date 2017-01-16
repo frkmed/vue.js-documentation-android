@@ -1,5 +1,7 @@
 package company.yak.vuejsdocumentation;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static String fileName = "index.html";
+    private AdView mAdView;
 
     Context mContext;
     Toolbar mToolbar;
@@ -73,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements
         getSupportActionBar().setTitle("The Progressive");
         getSupportActionBar().setSubtitle("JavaScript Framework");
         onDocumentationItemSelected(this.fileName);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override
