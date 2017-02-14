@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.me.myapplication.MainActivity">
+    <item
+        android:id="@+id/translations_en"
+        android:orderInCategory="100"
+        android:title="English"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/translations_cn"
+        android:orderInCategory="100"
+        android:title="中文"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/translations_jp"
+        android:orderInCategory="100"
+        android:title="日本語"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/translations_ru"
+        android:orderInCategory="100"
+        android:title="Русский"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/translations_kr"
+        android:orderInCategory="100"
+        android:title="한국어"
+        app:showAsAction="never" />
+</menu>

@@ -1,8 +1,7 @@
 package company.yak.vuejsdocumentation;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
@@ -14,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static String fileName = "index.html";
-    private AdView mAdView;
+    private static String translationDirectory = "vuejs.org";
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
 
     Context mContext;
     Toolbar mToolbar;
@@ -55,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        String restoredTranslationDirectory = prefs.getString("translationDirectory", null);
+        if (restoredTranslationDirectory != null) {
+            translationDirectory = restoredTranslationDirectory;
+        }
+
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -65,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements
                     CustomTabsIntent tabsIntent = new CustomTabsIntent.Builder().build();
                     tabsIntent.launchUrl(MainActivity.this, Uri.parse(url));
                 } else {
-                    String fileName = url.replace("file:///android_asset/", "");
+                    String fileName = url.replace("file:///android_asset/" + translationDirectory + "/", "");
                     onDocumentationItemSelected(fileName);
                 }
 
@@ -76,10 +83,210 @@ public class MainActivity extends AppCompatActivity implements
         getSupportActionBar().setTitle("The Progressive");
         getSupportActionBar().setSubtitle("JavaScript Framework");
         onDocumentationItemSelected(this.fileName);
+    }
 
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_translations, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.translations_en:
+                translationDirectory = "vuejs.org";
+                mNavigationView.getMenu().findItem(R.id.essentials).setTitleCondensed("Essentials");
+                mNavigationView.getMenu().findItem(R.id.advanced).setTitleCondensed("Advanced");
+                mNavigationView.getMenu().findItem(R.id.migrating).setTitleCondensed("Migrating");
+                mNavigationView.getMenu().findItem(R.id.meta).setTitleCondensed("Meta");
+                mNavigationView.getMenu().findItem(R.id.essentials_installation).setTitleCondensed("Installation");
+                mNavigationView.getMenu().findItem(R.id.essentials_introduction).setTitleCondensed("Introduction");
+                mNavigationView.getMenu().findItem(R.id.essentials_the_vue_instance).setTitleCondensed("The Vue Instance");
+                mNavigationView.getMenu().findItem(R.id.essentials_template_syntax).setTitleCondensed("Template Syntax");
+                mNavigationView.getMenu().findItem(R.id.essentials_computed_properties_and_watchers).setTitleCondensed("Computed Properties and Watchers");
+                mNavigationView.getMenu().findItem(R.id.essentials_class_and_style_bindings).setTitleCondensed("Class and Style Bindings");
+                mNavigationView.getMenu().findItem(R.id.essentials_conditional_rendering).setTitleCondensed("Conditional Rendering");
+                mNavigationView.getMenu().findItem(R.id.essentials_list_rendering).setTitleCondensed("List Rendering");
+                mNavigationView.getMenu().findItem(R.id.essentials_event_handling).setTitleCondensed("Event Handling");
+                mNavigationView.getMenu().findItem(R.id.essentials_form_input_bindings).setTitleCondensed("Form Input Bindings");
+                mNavigationView.getMenu().findItem(R.id.essentials_components).setTitleCondensed("Components");
+                mNavigationView.getMenu().findItem(R.id.advanced_reactivity_in_depth).setTitleCondensed("Reactivity in Depth");
+                mNavigationView.getMenu().findItem(R.id.advanced_transition_effects).setTitleCondensed("Transition Effects");
+                mNavigationView.getMenu().findItem(R.id.advanced_transitioning_state).setTitleCondensed("Transitioning State");
+                mNavigationView.getMenu().findItem(R.id.advanced_render_functions).setTitleCondensed("Render Functions");
+                mNavigationView.getMenu().findItem(R.id.advanced_custom_directives).setTitleCondensed("Custom Directives");
+                mNavigationView.getMenu().findItem(R.id.advanced_mixins).setTitleCondensed("Mixins");
+                mNavigationView.getMenu().findItem(R.id.advanced_plugins).setTitleCondensed("Plugins");
+                mNavigationView.getMenu().findItem(R.id.advanced_single_file_components).setTitleCondensed("Single File Components");
+                mNavigationView.getMenu().findItem(R.id.advanced_production_deployment_tips).setTitleCondensed("Deploying For Production");
+                mNavigationView.getMenu().findItem(R.id.advanced_routing).setTitleCondensed("Routing");
+                mNavigationView.getMenu().findItem(R.id.advanced_state_management).setTitleCondensed("State Management");
+                mNavigationView.getMenu().findItem(R.id.advanced_unit_testing).setTitleCondensed("Unit Testing");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_side_rendering).setTitleCondensed("Server-Side Rendering");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_typescript_support).setTitleCondensed("TypeScript Support");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_1_x).setTitleCondensed("Migration from Vue 1.x");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_router_0_7_x).setTitleCondensed("Migration from Vue Router 0.7.x");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vuex_0_6_x_to_1_0).setTitleCondensed("Migration from Vuex 0.6.x to 1.0");
+                mNavigationView.getMenu().findItem(R.id.meta_comparison_with_other_frameworks).setTitleCondensed("Comparison with Other Frameworks");
+                mNavigationView.getMenu().findItem(R.id.meta_join_the_vue_js_community).setTitleCondensed("Join the Vue.js Community!");
+                break;
+            case R.id.translations_cn:
+                translationDirectory = "cn.vuejs.org";
+                mNavigationView.getMenu().findItem(R.id.essentials).setTitle("基础");
+                mNavigationView.getMenu().findItem(R.id.advanced).setTitle("进阶");
+                mNavigationView.getMenu().findItem(R.id.migrating).setTitle("迁移");
+                mNavigationView.getMenu().findItem(R.id.meta).setTitle("更多");
+                mNavigationView.getMenu().findItem(R.id.essentials_installation).setTitle("安装");
+                mNavigationView.getMenu().findItem(R.id.essentials_introduction).setTitle("介绍");
+                mNavigationView.getMenu().findItem(R.id.essentials_the_vue_instance).setTitle("Vue 实例");
+                mNavigationView.getMenu().findItem(R.id.essentials_template_syntax).setTitle("模板语法");
+                mNavigationView.getMenu().findItem(R.id.essentials_computed_properties_and_watchers).setTitle("计算属性");
+                mNavigationView.getMenu().findItem(R.id.essentials_class_and_style_bindings).setTitle("Class 与 Style 绑定");
+                mNavigationView.getMenu().findItem(R.id.essentials_conditional_rendering).setTitle("条件渲染");
+                mNavigationView.getMenu().findItem(R.id.essentials_list_rendering).setTitle("列表渲染");
+                mNavigationView.getMenu().findItem(R.id.essentials_event_handling).setTitle("事件处理器");
+                mNavigationView.getMenu().findItem(R.id.essentials_form_input_bindings).setTitle("表单控件绑定");
+                mNavigationView.getMenu().findItem(R.id.essentials_components).setTitle("组件");
+                mNavigationView.getMenu().findItem(R.id.advanced_reactivity_in_depth).setTitle("深入响应式原理");
+                mNavigationView.getMenu().findItem(R.id.advanced_transition_effects).setTitle("过渡效果");
+                mNavigationView.getMenu().findItem(R.id.advanced_transitioning_state).setTitle("过渡状态");
+                mNavigationView.getMenu().findItem(R.id.advanced_render_functions).setTitle("Render 函数");
+                mNavigationView.getMenu().findItem(R.id.advanced_custom_directives).setTitle("自定义指令");
+                mNavigationView.getMenu().findItem(R.id.advanced_mixins).setTitle("混合");
+                mNavigationView.getMenu().findItem(R.id.advanced_plugins).setTitle("插件");
+                mNavigationView.getMenu().findItem(R.id.advanced_single_file_components).setTitle("单文件组件");
+                mNavigationView.getMenu().findItem(R.id.advanced_production_deployment_tips).setTitle("生产环境部署");
+                mNavigationView.getMenu().findItem(R.id.advanced_routing).setTitle("路由");
+                mNavigationView.getMenu().findItem(R.id.advanced_state_management).setTitle("状态管理");
+                mNavigationView.getMenu().findItem(R.id.advanced_unit_testing).setTitle("单元测试");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_side_rendering).setTitle("服务端渲染");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_typescript_support).setTitle("TypeScript Support");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_1_x).setTitle("从 Vue 1.x 迁移");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_router_0_7_x).setTitle("从 Vue Router 0.7.x 迁移");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vuex_0_6_x_to_1_0).setTitle("从 Vuex 0.6.x 迁移到 1.0");
+                mNavigationView.getMenu().findItem(R.id.meta_comparison_with_other_frameworks).setTitle("对比其他框架");
+                mNavigationView.getMenu().findItem(R.id.meta_join_the_vue_js_community).setTitle("加入Vue.js社区");
+                break;
+            case R.id.translations_jp:
+                translationDirectory = "jp.vuejs.org";
+                mNavigationView.getMenu().findItem(R.id.essentials).setTitle("基本的な使い方");
+                mNavigationView.getMenu().findItem(R.id.advanced).setTitle("高度な使い方");
+                mNavigationView.getMenu().findItem(R.id.migrating).setTitle("移行");
+                mNavigationView.getMenu().findItem(R.id.meta).setTitle("その他");
+                mNavigationView.getMenu().findItem(R.id.essentials_installation).setTitle("インストール");
+                mNavigationView.getMenu().findItem(R.id.essentials_introduction).setTitle("はじめに");
+                mNavigationView.getMenu().findItem(R.id.essentials_the_vue_instance).setTitle("Vue インスタンス");
+                mNavigationView.getMenu().findItem(R.id.essentials_template_syntax).setTitle("テンプレート構文");
+                mNavigationView.getMenu().findItem(R.id.essentials_computed_properties_and_watchers).setTitle("算出プロパティとウォッチャ");
+                mNavigationView.getMenu().findItem(R.id.essentials_class_and_style_bindings).setTitle("クラスとスタイルのバインディング");
+                mNavigationView.getMenu().findItem(R.id.essentials_conditional_rendering).setTitle("条件付きレンダリング");
+                mNavigationView.getMenu().findItem(R.id.essentials_list_rendering).setTitle("リストレンダリング");
+                mNavigationView.getMenu().findItem(R.id.essentials_event_handling).setTitle("イベントハンドリング");
+                mNavigationView.getMenu().findItem(R.id.essentials_form_input_bindings).setTitle("フォーム入力バインディング");
+                mNavigationView.getMenu().findItem(R.id.essentials_components).setTitle("コンポーネント");
+                mNavigationView.getMenu().findItem(R.id.advanced_reactivity_in_depth).setTitle("リアクティブの探求");
+                mNavigationView.getMenu().findItem(R.id.advanced_transition_effects).setTitle("トランジション効果");
+                mNavigationView.getMenu().findItem(R.id.advanced_transitioning_state).setTitle("状態のトランジション");
+                mNavigationView.getMenu().findItem(R.id.advanced_render_functions).setTitle("描画関数");
+                mNavigationView.getMenu().findItem(R.id.advanced_custom_directives).setTitle("カスタムディレクティブ");
+                mNavigationView.getMenu().findItem(R.id.advanced_mixins).setTitle("ミックスイン");
+                mNavigationView.getMenu().findItem(R.id.advanced_plugins).setTitle("プラグイン");
+                mNavigationView.getMenu().findItem(R.id.advanced_single_file_components).setTitle("単一ファイルコンポーネント");
+                mNavigationView.getMenu().findItem(R.id.advanced_production_deployment_tips).setTitle("プロダクション環境への配信のヒント");
+                mNavigationView.getMenu().findItem(R.id.advanced_routing).setTitle("ルーティング");
+                mNavigationView.getMenu().findItem(R.id.advanced_state_management).setTitle("状態管理");
+                mNavigationView.getMenu().findItem(R.id.advanced_unit_testing).setTitle("単体テスト");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_side_rendering).setTitle("サーバサイドレンダリング");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_typescript_support).setTitle("TypeScript のサポート");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_1_x).setTitle("Vue 1.x からの移行");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_router_0_7_x).setTitle("Vue Router 0.7.x からの移行");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vuex_0_6_x_to_1_0).setTitle("Vuex 0.6.x から 1.0 への移行");
+                mNavigationView.getMenu().findItem(R.id.meta_comparison_with_other_frameworks).setTitle("他のフレームワークとの比較");
+                mNavigationView.getMenu().findItem(R.id.meta_join_the_vue_js_community).setTitle("Vue.js コミュニティへ参加しましょう!");
+                break;
+            case R.id.translations_ru:
+                translationDirectory = "ru.vuejs.org";
+                mNavigationView.getMenu().findItem(R.id.essentials).setTitle("Основы");
+                mNavigationView.getMenu().findItem(R.id.advanced).setTitle("Продвинутые темы");
+                mNavigationView.getMenu().findItem(R.id.migrating).setTitle("Вопросы миграции");
+                mNavigationView.getMenu().findItem(R.id.meta).setTitle("Мета");
+                mNavigationView.getMenu().findItem(R.id.essentials_installation).setTitle("Установка");
+                mNavigationView.getMenu().findItem(R.id.essentials_introduction).setTitle("Введение");
+                mNavigationView.getMenu().findItem(R.id.essentials_the_vue_instance).setTitle("Экземпляр Vue");
+                mNavigationView.getMenu().findItem(R.id.essentials_template_syntax).setTitle("Синтаксис шаблонов");
+                mNavigationView.getMenu().findItem(R.id.essentials_computed_properties_and_watchers).setTitle("Вычисляемые свойства и слежение");
+                mNavigationView.getMenu().findItem(R.id.essentials_class_and_style_bindings).setTitle("Работа с классами и стилями");
+                mNavigationView.getMenu().findItem(R.id.essentials_conditional_rendering).setTitle("Условный рендеринг");
+                mNavigationView.getMenu().findItem(R.id.essentials_list_rendering).setTitle("Рендеринг списков");
+                mNavigationView.getMenu().findItem(R.id.essentials_event_handling).setTitle("Обработка событий");
+                mNavigationView.getMenu().findItem(R.id.essentials_form_input_bindings).setTitle("Работа с формами");
+                mNavigationView.getMenu().findItem(R.id.essentials_components).setTitle("Компоненты");
+                mNavigationView.getMenu().findItem(R.id.advanced_reactivity_in_depth).setTitle("Подробно о реактивности");
+                mNavigationView.getMenu().findItem(R.id.advanced_transition_effects).setTitle("Анимационные эффекты переходов");
+                mNavigationView.getMenu().findItem(R.id.advanced_transitioning_state).setTitle("Анимирование переходов между состояниями");
+                mNavigationView.getMenu().findItem(R.id.advanced_render_functions).setTitle("Render-функции");
+                mNavigationView.getMenu().findItem(R.id.advanced_custom_directives).setTitle("Пользовательские директивы");
+                mNavigationView.getMenu().findItem(R.id.advanced_mixins).setTitle("Примеси");
+                mNavigationView.getMenu().findItem(R.id.advanced_plugins).setTitle("Плагины");
+                mNavigationView.getMenu().findItem(R.id.advanced_single_file_components).setTitle("Однофайловые компоненты");
+                mNavigationView.getMenu().findItem(R.id.advanced_production_deployment_tips).setTitle("Советы по развёртыванию");
+                mNavigationView.getMenu().findItem(R.id.advanced_routing).setTitle("Роутинг");
+                mNavigationView.getMenu().findItem(R.id.advanced_state_management).setTitle("Управление состоянием приложения");
+                mNavigationView.getMenu().findItem(R.id.advanced_unit_testing).setTitle("Модульное тестирование");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_side_rendering).setTitle("SSR. Рендеринг на стороне сервера");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_typescript_support).setTitle("Поддержка TypeScript");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_1_x).setTitle("Миграция с Vue 1.x");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_router_0_7_x).setTitle("Миграция с Vue Router 0.7.x");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vuex_0_6_x_to_1_0).setTitle("Миграция с Vuex 0.6.x на 1.0");
+                mNavigationView.getMenu().findItem(R.id.meta_comparison_with_other_frameworks).setTitle("Сравнение с другими фреймворками");
+                mNavigationView.getMenu().findItem(R.id.meta_join_the_vue_js_community).setTitle("Присоединяйтесь к сообществу Vue.js!");
+                break;
+            case R.id.translations_kr:
+                translationDirectory = "kr.vuejs.org";
+                mNavigationView.getMenu().findItem(R.id.essentials).setTitle("필수");
+                mNavigationView.getMenu().findItem(R.id.advanced).setTitle("고급");
+                mNavigationView.getMenu().findItem(R.id.migrating).setTitle("마이그레이션 방법");
+                mNavigationView.getMenu().findItem(R.id.meta).setTitle("기타");
+                mNavigationView.getMenu().findItem(R.id.essentials_installation).setTitle("설치방법");
+                mNavigationView.getMenu().findItem(R.id.essentials_introduction).setTitle("시작하기");
+                mNavigationView.getMenu().findItem(R.id.essentials_the_vue_instance).setTitle("Vue 인스턴스");
+                mNavigationView.getMenu().findItem(R.id.essentials_template_syntax).setTitle("템플릿 문법");
+                mNavigationView.getMenu().findItem(R.id.essentials_computed_properties_and_watchers).setTitle("계산된 속성과 감시자");
+                mNavigationView.getMenu().findItem(R.id.essentials_class_and_style_bindings).setTitle("클래스와 스타일 바인딩");
+                mNavigationView.getMenu().findItem(R.id.essentials_conditional_rendering).setTitle("조건부 렌더링");
+                mNavigationView.getMenu().findItem(R.id.essentials_list_rendering).setTitle("리스트 렌더링");
+                mNavigationView.getMenu().findItem(R.id.essentials_event_handling).setTitle("이벤트 핸들링");
+                mNavigationView.getMenu().findItem(R.id.essentials_form_input_bindings).setTitle("폼 입력 바인딩");
+                mNavigationView.getMenu().findItem(R.id.essentials_components).setTitle("컴포넌트");
+                mNavigationView.getMenu().findItem(R.id.advanced_reactivity_in_depth).setTitle("반응형에 대해 깊이 알아보기");
+                mNavigationView.getMenu().findItem(R.id.advanced_transition_effects).setTitle("전환 효과");
+                mNavigationView.getMenu().findItem(R.id.advanced_transitioning_state).setTitle("트렌지션 상태");
+                mNavigationView.getMenu().findItem(R.id.advanced_render_functions).setTitle("렌더 함수");
+                mNavigationView.getMenu().findItem(R.id.advanced_custom_directives).setTitle("사용자 지정 디렉티브");
+                mNavigationView.getMenu().findItem(R.id.advanced_mixins).setTitle("믹스인");
+                mNavigationView.getMenu().findItem(R.id.advanced_plugins).setTitle("플러그인");
+                mNavigationView.getMenu().findItem(R.id.advanced_single_file_components).setTitle("단일 파일 컴포넌트");
+                mNavigationView.getMenu().findItem(R.id.advanced_production_deployment_tips).setTitle("프로덕션 배포 팁");
+                mNavigationView.getMenu().findItem(R.id.advanced_routing).setTitle("라우팅");
+                mNavigationView.getMenu().findItem(R.id.advanced_state_management).setTitle("상태 관리");
+                mNavigationView.getMenu().findItem(R.id.advanced_unit_testing).setTitle("단위 테스팅");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_side_rendering).setTitle("서버사이드 렌더링");
+                mNavigationView.getMenu().findItem(R.id.advanced_server_typescript_support).setTitle("TypeScript 지원");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_1_x).setTitle("Vue 1.x에서 마이그레이션");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vue_router_0_7_x).setTitle("Vue Router 0.7.x으로 부터 마이그레이션");
+                mNavigationView.getMenu().findItem(R.id.migrating_migration_from_vuex_0_6_x_to_1_0).setTitle("Vuex 0.6.x에서 1.0로 마이그레이션");
+                mNavigationView.getMenu().findItem(R.id.meta_comparison_with_other_frameworks).setTitle("다른 프레임워크와의 비교");
+                mNavigationView.getMenu().findItem(R.id.meta_join_the_vue_js_community).setTitle("Vue.js 커뮤니티에 참여하세요!");
+                break;
+        }
+
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putString("translationDirectory", translationDirectory);
+        editor.commit();
+
+        onDocumentationItemSelected(this.fileName);
+        return true;
     }
 
     @Override
@@ -190,8 +397,8 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportActionBar().setSubtitle("Advanced");
                 onDocumentationItemSelected("v2/guide/single-file-components.html");
                 break;
-            case R.id.advanced_deploying_for_production:
-                getSupportActionBar().setTitle("Deploying For Production");
+            case R.id.advanced_production_deployment_tips:
+                getSupportActionBar().setTitle("Production Deployment Tips");
                 getSupportActionBar().setSubtitle("Advanced");
                 onDocumentationItemSelected("v2/guide/deployment.html");
                 break;
@@ -347,9 +554,9 @@ public class MainActivity extends AppCompatActivity implements
                 mNavigationView.setCheckedItem(R.id.advanced_single_file_components);
                 break;
             case "v2/guide/deployment.html":
-                getSupportActionBar().setTitle("Deploying For Production");
+                getSupportActionBar().setTitle("Production Deployment Tips");
                 getSupportActionBar().setSubtitle("Advanced");
-                mNavigationView.setCheckedItem(R.id.advanced_deploying_for_production);
+                mNavigationView.setCheckedItem(R.id.advanced_production_deployment_tips);
                 break;
             case "v2/guide/routing.html":
                 getSupportActionBar().setTitle("Routing");
@@ -400,13 +607,13 @@ public class MainActivity extends AppCompatActivity implements
 
         String htmlDocumentation = null;
         try {
-            htmlDocumentation = readStream(getAssets().open(fileName));
+            htmlDocumentation = readStream(getAssets().open(translationDirectory + "/" + fileName));
             htmlDocumentation = htmlDocumentation.replace("</head>", "<link rel=\"stylesheet\" href=\"file:///android_asset/stylesheet.css\"></head>");
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        mWebView.loadDataWithBaseURL("file:///android_asset/",
+        mWebView.loadDataWithBaseURL("file:///android_asset/" + translationDirectory + "/",
                 htmlDocumentation, "text/html", "UTF-8", "");
     }
 
