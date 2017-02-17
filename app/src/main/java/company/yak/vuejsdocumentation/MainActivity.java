@@ -422,6 +422,11 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportActionBar().setSubtitle("Advanced");
                 onDocumentationItemSelected("v2/guide/ssr.html");
                 break;
+            case R.id.advanced_server_typescript_support:
+                getSupportActionBar().setTitle("TypeScript Support");
+                getSupportActionBar().setSubtitle("Advanced");
+                onDocumentationItemSelected("v2/guide/typescript.html");
+                break;
             case R.id.migrating_migration_from_vue_1_x:
                 getSupportActionBar().setTitle("Migration from Vue 1.x");
                 getSupportActionBar().setSubtitle("Migrating");
@@ -577,6 +582,11 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportActionBar().setTitle("Server-Side Rendering");
                 getSupportActionBar().setSubtitle("Advanced");
                 mNavigationView.setCheckedItem(R.id.advanced_server_side_rendering);
+                break;
+            case "v2/guide/typescript.html":
+                getSupportActionBar().setTitle("TypeScript Support");
+                getSupportActionBar().setSubtitle("Advanced");
+                mNavigationView.setCheckedItem(R.id.advanced_server_typescript_support);
                 break;
             case "v2/guide/migration.html":
                 getSupportActionBar().setTitle("Migration from Vue 1.x");
