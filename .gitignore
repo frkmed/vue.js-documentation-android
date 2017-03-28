@@ -11,4 +11,5 @@
 /vuejs.org
 /app/src/main/assets/*
 !/app/src/main/assets/stylesheet.css
+!/app/src/main/assets/nighttime.css
 .idea

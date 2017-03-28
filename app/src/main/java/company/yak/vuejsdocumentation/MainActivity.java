@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements
     private static final String TAG = MainActivity.class.getSimpleName();
     private static String fileName = "index.html";
     private static String translationDirectory = "vuejs.org";
+    private static Boolean toggleNightMode = false;
     public static final String MY_PREFS_NAME = "MyPrefsFile";
 
     Context mContext;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements
         if (restoredTranslationDirectory != null) {
             translationDirectory = restoredTranslationDirectory;
         }
+        this.toggleNightMode = prefs.getBoolean("toggleNightMode", false);
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient() {
@@ -279,11 +281,25 @@ public class MainActivity extends AppCompatActivity implements
                 mNavigationView.getMenu().findItem(R.id.meta_comparison_with_other_frameworks).setTitle("다른 프레임워크와의 비교");
                 mNavigationView.getMenu().findItem(R.id.meta_join_the_vue_js_community).setTitle("Vue.js 커뮤니티에 참여하세요!");
                 break;
+            case R.id.toggle_night_mode:
+                if (toggleNightMode.booleanValue() == false) {
+                    toggleNightMode = true;
+                } else {
+                    toggleNightMode = false;
+                }
+
+                onDocumentationItemSelected(this.fileName);
+                break;
         }
 
         SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-        editor.putString("translationDirectory", translationDirectory);
-        editor.commit();
+        if (item.getItemId() != R.id.toggle_night_mode) {
+            editor.putString("translationDirectory", translationDirectory);
+            editor.commit();
+        } else if (item.getItemId() == R.id.toggle_night_mode) {
+            editor.putBoolean("toggleNightMode", toggleNightMode);
+            editor.commit();
+        }
 
         onDocumentationItemSelected(this.fileName);
         return true;
@@ -618,7 +634,12 @@ public class MainActivity extends AppCompatActivity implements
         String htmlDocumentation = null;
         try {
             htmlDocumentation = readStream(getAssets().open(translationDirectory + "/" + fileName));
-            htmlDocumentation = htmlDocumentation.replace("</head>", "<link rel=\"stylesheet\" href=\"file:///android_asset/stylesheet.css\"></head>");
+
+            if (toggleNightMode.booleanValue() == true) {
+                htmlDocumentation = htmlDocumentation.replace("</head>", "<link rel=\"stylesheet\" href=\"file:///android_asset/stylesheet.css\"><link rel=\"stylesheet\" href=\"file:///android_asset/nighttime.css\"></head>");
+            } else {
+                htmlDocumentation = htmlDocumentation.replace("</head>", "<link rel=\"stylesheet\" href=\"file:///android_asset/stylesheet.css\"></head>");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

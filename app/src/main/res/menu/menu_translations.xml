@@ -27,4 +27,9 @@
         android:orderInCategory="100"
         android:title="한국어"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/toggle_night_mode"
+        android:orderInCategory="100"
+        android:title="Toggle: Night Mode"
+        app:showAsAction="never" />
 </menu>
